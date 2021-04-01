@@ -1,0 +1,74 @@
+<template>
+  <v-row>
+    <v-col>
+      <h1 class="headline">Combat rating calculator</h1>
+      <p class="pa-1">This tool is based on data and formulas found in TBC 2.4 client</p>
+      <v-divider />
+      <v-flex xs12 mt-2 pa-1>
+        <v-form>
+          <v-layout column wrap>
+            <v-text-field v-model="form.level" label="Level" type="number" @input="validateLevel" />
+            <v-autocomplete
+              v-model="form.combatRating"
+              :items="combatRatings"
+              auto-select-first
+              clearable
+              label="Combat rating"
+            />
+            <v-row>
+              <v-col><v-text-field v-model="form.ratingValue" label="Rating value" type="number" /></v-col>
+              <v-col>
+                <v-text-field
+                  :value="getConvertedRating()"
+                  label="Converted rating"
+                  readonly
+                  suffix="%"
+                  type="number"
+                />
+              </v-col>
+            </v-row>
+          </v-layout>
+        </v-form>
+      </v-flex>
+    </v-col>
+  </v-row>
+</template>
+
+<script lang="ts">
+import combatRatings, { CombatRating } from '~/constants/combat-ratings';
+import gtCombatRatings from '~/constants/gt-combat-ratings';
+import { GT_MAX_LEVEL } from '~/constants/player';
+
+export default {
+  data: () => ({
+    form: {
+      combatRating: CombatRating.WEAPON_SKILL,
+      level: 70,
+      ratingValue: 0,
+    },
+    combatRatings,
+  }),
+  methods: {
+    getConvertedRating() {
+      const value = this.form.ratingValue * this.getRatingMultiplier();
+
+      return Math.round((value + Number.EPSILON) * 100) / 100;
+    },
+    getRatingMultiplier() {
+      const entry = this.form?.combatRating * GT_MAX_LEVEL + (this.form?.level - 1);
+      const ratio = gtCombatRatings[entry];
+
+      return 1.0 / ratio;
+    },
+    validateLevel(value) {
+      if (!value) {
+        this.form.level = 1;
+      }
+
+      if (value > GT_MAX_LEVEL) {
+        this.form.level = GT_MAX_LEVEL;
+      }
+    },
+  },
+};
+</script>
