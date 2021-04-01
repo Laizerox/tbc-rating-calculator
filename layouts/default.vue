@@ -6,7 +6,7 @@
       </v-container>
     </v-main>
     <v-footer class="pa-2">
-      <span>Laizerox &copy; 2021</span>
+      <span><a href="https://github.com/Laizerox">Laizerox</a> &copy; 2021</span>
     </v-footer>
   </v-app>
 </template>
