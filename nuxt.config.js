@@ -3,6 +3,9 @@ import colors from 'vuetify/es5/util/colors';
 export default {
   ssr: false,
   target: 'static',
+  router: {
+    base: '/tbc-rating-calculator/',
+  },
   head: {
     titleTemplate: '%s - tbc-rating-calculator',
     title: 'tbc-rating-calculator',
