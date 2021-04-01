@@ -25,7 +25,13 @@ export enum CombatRating {
   EXPERTISE = 24,
 }
 
-export default [
+export interface CombatRatingOption {
+  header?: string;
+  text?: string;
+  value?: CombatRating;
+}
+
+const CombatRatingOptions: CombatRatingOption[] = [
   {
     header: 'Defenses',
   },
@@ -106,3 +112,5 @@ export default [
     value: CombatRating.WEAPON_SKILL,
   },
 ];
+
+export default CombatRatingOptions;

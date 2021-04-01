@@ -35,32 +35,47 @@
 </template>
 
 <script lang="ts">
-import combatRatings, { CombatRating } from '~/constants/combat-ratings';
+import Vue from 'vue';
+
+import combatRatings, { CombatRating, CombatRatingOption } from '~/constants/combat-ratings';
 import gtCombatRatings from '~/constants/gt-combat-ratings';
 import { GT_MAX_LEVEL } from '~/constants/player';
 
-export default {
-  data: () => ({
-    form: {
-      combatRating: CombatRating.WEAPON_SKILL,
-      level: 70,
-      ratingValue: 0,
-    },
-    combatRatings,
-  }),
+interface CombatRatingCalculatorForm {
+  combatRating: CombatRating;
+  level: number;
+  ratingValue: number;
+}
+
+interface CombatRatingCalculatorData {
+  combatRatings: CombatRatingOption[];
+  form: CombatRatingCalculatorForm;
+}
+
+export default Vue.extend({
+  data(): CombatRatingCalculatorData {
+    return {
+      form: {
+        combatRating: CombatRating.WEAPON_SKILL,
+        level: 70,
+        ratingValue: 0,
+      },
+      combatRatings,
+    };
+  },
   methods: {
-    getConvertedRating() {
+    getConvertedRating(): number {
       const value = this.form.ratingValue * this.getRatingMultiplier();
 
       return Math.round((value + Number.EPSILON) * 100) / 100;
     },
-    getRatingMultiplier() {
+    getRatingMultiplier(): number {
       const entry = this.form?.combatRating * GT_MAX_LEVEL + (this.form?.level - 1);
       const ratio = gtCombatRatings[entry];
 
       return 1.0 / ratio;
     },
-    validateLevel(value) {
+    validateLevel(value: number) {
       if (!value) {
         this.form.level = 1;
       }
@@ -70,5 +85,5 @@ export default {
       }
     },
   },
-};
+});
 </script>
