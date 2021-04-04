@@ -70,7 +70,7 @@ export default Vue.extend({
       return Math.round((value + Number.EPSILON) * 100) / 100;
     },
     getRatingMultiplier(): number {
-      const entry = this.form?.combatRating * GT_MAX_LEVEL + (this.form?.level - 1);
+      const entry = (this.form.combatRating - 1) * GT_MAX_LEVEL + (this.form.level - 1);
       const ratio = gtCombatRatings[entry];
 
       return 1.0 / ratio;
