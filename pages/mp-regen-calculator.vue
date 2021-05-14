@@ -71,13 +71,13 @@ interface ManaRegenCalculatorForm {
   spirit: number;
 }
 
-interface CombatRatingCalculatorData {
-  combatRatings: ClassOption[];
+interface ManaRegenCalculatorData {
+  classes: ClassOption[];
   form: ManaRegenCalculatorForm;
 }
 
 export default Vue.extend({
-  data(): CombatRatingCalculatorData {
+  data(): ManaRegenCalculatorData {
     return {
       form: {
         class: Classes.PALADIN,

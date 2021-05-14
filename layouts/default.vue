@@ -40,8 +40,20 @@
 </template>
 
 <script lang="ts">
-export default {
-  data() {
+import Vue from 'vue';
+
+interface NavigationItem {
+  link: { name: string };
+  name: string;
+}
+
+interface DefaultLayoutData {
+  isDrawerVisible: boolean;
+  navigation: NavigationItem[];
+}
+
+export default Vue.extend({
+  data(): DefaultLayoutData {
     return {
       isDrawerVisible: false,
       navigation: [
@@ -53,10 +65,10 @@ export default {
   },
   methods: {
     getPageTitle(): string {
-      return this.navigation.find((nav) => nav.link.name === this.$nuxt.$route.name).name || 'Title';
+      return this.navigation.find((nav: NavigationItem) => nav.link.name === this.$nuxt.$route.name)?.name || 'Title';
     },
   },
-};
+});
 </script>
 
 <style>

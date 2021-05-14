@@ -47,13 +47,13 @@ interface HealthRegenCalculatorForm {
   isTroll: boolean;
 }
 
-interface CombatRatingCalculatorData {
-  combatRatings: ClassOption[];
+interface HealthRegenCalculatorData {
+  classes: ClassOption[];
   form: HealthRegenCalculatorForm;
 }
 
 export default Vue.extend({
-  data(): CombatRatingCalculatorData {
+  data(): HealthRegenCalculatorData {
     return {
       form: {
         class: Classes.WARRIOR,
