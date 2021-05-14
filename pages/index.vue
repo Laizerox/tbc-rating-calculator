@@ -1,9 +1,6 @@
 <template>
   <v-row>
     <v-col>
-      <h1 class="headline">Combat rating calculator</h1>
-      <p class="pa-1">This tool is based on data and formulas found in TBC 2.4 client</p>
-      <v-divider />
       <v-flex xs12 mt-2 pa-1>
         <v-form>
           <v-layout column wrap>
@@ -38,7 +35,7 @@
 import Vue from 'vue';
 
 import combatRatings, { CombatRating, CombatRatingOption } from '~/constants/combat-ratings';
-import gtCombatRatings from '~/constants/gt-combat-ratings';
+import gtCombatRatings from '~/data/gt-combat-ratings';
 import { GT_MAX_LEVEL } from '~/constants/player';
 
 interface CombatRatingCalculatorForm {
