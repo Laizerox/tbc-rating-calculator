@@ -57,7 +57,7 @@ export default Vue.extend({
     return {
       isDrawerVisible: false,
       navigation: [
-        { link: { name: 'index' }, name: 'Combat regen calculator' },
+        { link: { name: 'index' }, name: 'Combat rating calculator' },
         { link: { name: 'hp-regen-calculator' }, name: 'Health regen calculator' },
         { link: { name: 'mp-regen-calculator' }, name: 'Mana regen calculator' },
       ],
