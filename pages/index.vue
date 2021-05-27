@@ -19,7 +19,7 @@
                   :value="getConvertedRating()"
                   label="Converted rating"
                   readonly
-                  suffix="%"
+                  :suffix="getSuffix()"
                   type="number"
                 />
               </v-col>
@@ -47,30 +47,43 @@ interface CombatRatingCalculatorForm {
 interface CombatRatingCalculatorData {
   combatRatings: CombatRatingOption[];
   form: CombatRatingCalculatorForm;
+  skillRatings: CombatRating[];
 }
 
 export default Vue.extend({
   data(): CombatRatingCalculatorData {
     return {
+      combatRatings,
       form: {
         combatRating: CombatRating.WEAPON_SKILL,
         level: 70,
         ratingValue: 0,
       },
-      combatRatings,
+      skillRatings: [CombatRating.DEFENSE_SKILL, CombatRating.WEAPON_SKILL],
     };
   },
   methods: {
     getConvertedRating(): number {
       const value = this.form.ratingValue * this.getRatingMultiplier();
 
-      return Math.round((value + Number.EPSILON) * 100) / 100;
+      if (this.skillRatings.includes(this.form.combatRating)) {
+        return Math.floor(value);
+      }
+
+      return Math.floor(value * 100) / 100;
     },
     getRatingMultiplier(): number {
       const entry = (this.form.combatRating - 1) * GT_MAX_LEVEL + (this.form.level - 1);
       const ratio = gtCombatRatings[entry];
 
       return 1.0 / ratio;
+    },
+    getSuffix(): string {
+      if (this.skillRatings.includes(this.form.combatRating)) {
+        return this.form.combatRating !== CombatRating.WEAPON_SKILL ? 'Defense' : 'Weapon';
+      }
+
+      return '%';
     },
     validateLevel(value: number) {
       if (!value) {
